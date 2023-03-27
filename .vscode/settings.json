@@ -1,0 +1,68 @@
+{
+    //"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
+    "explorer.confirmDelete": false,
+    "workbench.iconTheme": "vscode-icons",
+    "editor.formatOnSave": false,
+    "workbench.list.multiSelectModifier": "alt",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "emmet.syntaxProfiles": {
+    
+    },
+      "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.suggestSelection": "first",
+    "editor.snippetSuggestions": "top",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs":"active",
+    "prettier.stylelintIntegration": true,
+
+    "synthwave84.brightness": 0.45,
+    "synthwave84.disableGlow": false,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "workbench.colorTheme": "Winter is Coming (Dark Blue)",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "search.useIgnoreFiles": false,
+    "search.exclude": {
+        "**/node_modules": true,
+    },
+    "indenticator.showIndentGuide": true,
+    "git.autofetch": true,
+    "bracketPairColorizer.depreciation-notice": false,
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "vsicons.dontShowNewVersionMessage": true,
+    "cSpell.userWords": [
+        "Категории"
+    ],
+    "security.workspace.trust.untrustedFiles": "open",
+    "yaml.schemas": {
+        "file:///Users/macbook/.vscode/extensions/atlassian.atlascode-3.0.2/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
+    "redhat.telemetry.enabled": true,
+    "atlascode.jira.lastCreateSiteAndProject": {
+        "siteId": "",
+        "projectKey": ""
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.editorAssociations": {
+        "*.svg": "default"
+    }
+}

@@ -1,0 +1,4 @@
+{
+    "db_url": "mongodb://localhost/izi_work",
+    "host_name": "http://localhost:8001/"
+}
