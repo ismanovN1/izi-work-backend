@@ -13,13 +13,15 @@ import {
   Resume,
   FavoritesResumes,
   FavoritesVacancies,
+  User,
 } from "../models/index.js";
 import config from "config";
 import { checkObjValue } from "../helpers/common.js";
+import { transporter } from "../../index.js";
 
 const __dirname = path.resolve();
 
-const find_or_create_respond = async ({
+export const find_or_create_respond = async ({
   waiter_id,
   vacancy_id,
   resume_id,
@@ -77,6 +79,20 @@ export const respond = async (req, res) => {
   if (is_responded && !respond.is_responded) {
     respond.is_responded = is_responded;
     respond.responded_at = new Date().toISOString();
+    const user = await User.findById(employer_id);
+    if(user) {
+      const mailOptions = {
+        from: "ismanov98q@gmail.com",
+        to: user.email,
+        subject: "Hа вашу вакансию откликнулся пользователь",
+        text: `https://iziwork.kz/`,
+      };
+      transporter.sendMail(mailOptions, (err, info) => {
+        console.log(err);
+        console.log(info);
+      });
+    }
+    
     (async () => {
       const vacancy = await Vacancy.findById(respond.vacancy_id);
       if (vacancy) {

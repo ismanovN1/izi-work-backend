@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "serve": "node index.js",
-    "dev": "export PORT=8001 && export jwt_private_key=123 && nodemon index.js",
+    "dev": "export PORT=8001  && export jwt_private_key=123 && nodemon index.js",
     "start": "node index.js"
   },
   "engines": {
@@ -28,6 +28,8 @@
     "lodash": "^4.17.21",
     "mongoose": "^7.0.0",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.1",
+    "socket.io": "^4.6.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -8,6 +8,7 @@ import {
   validateUserRegistr,
 } from "../helpers/validation.js";
 import { checkObjValue } from "../helpers/common.js";
+import { transporter } from "../../index.js";
 
 export const registration = async (req, res) => {
   const { error } = validateUserRegistr(req.body);
@@ -24,6 +25,17 @@ export const registration = async (req, res) => {
 
   await user.save();
   const token = user.generateAuthToken();
+
+  const mailOptions = {
+    from: "ismanov98q@gmail.com",
+    to: user.email,
+    subject: "Bы зарегистрировались на сайте",
+    text: `https://iziwork.kz/`,
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    console.log(err);
+    console.log(info);
+  });
 
   return res.send({
     ..._.pick(user, ["_id", "name", "email", "phone"]),

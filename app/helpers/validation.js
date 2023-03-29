@@ -183,3 +183,12 @@ export const validateRespond = (resume) => {
 
   return schema.validate(resume);
 };
+
+export const validateCreatingMessage = (message) => {
+  const schema = Joi.object({
+    chat_id: Joi.string().required(),
+    message: Joi.string().required()
+  });
+
+  return schema.validate(message);
+};
