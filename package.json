@@ -9,9 +9,6 @@
     "dev": "export PORT=8001  && export jwt_private_key=123 && nodemon index.js",
     "start": "node index.js"
   },
-  "engines": {
-    "node": "16.19.1"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",

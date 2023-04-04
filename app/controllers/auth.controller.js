@@ -38,7 +38,7 @@ export const registration = async (req, res) => {
   });
 
   return res.send({
-    ..._.pick(user, ["_id", "name", "email", "phone"]),
+    ..._.pick(user, ["_id", "name", "email", "phone", "is_employer"]),
     token,
   });
 };
@@ -59,7 +59,7 @@ export const authorization = async (req, res) => {
 
   const token = user.generateAuthToken();
   return res.send({
-    ..._.pick(user, ["_id", "name", "email", "phone"]),
+    ..._.pick(user, ["_id", "name", "email", "phone", "is_employer"]),
     token,
   });
 };

@@ -11,6 +11,9 @@ export const get_chat = async (req, res) => {
 
   if (chat_id) {
     const chat = await Chat.findById(chat_id).populate(
+      "resume_id" ,
+     `name picture`
+   ).populate(
       "vacancy_id",
       "_id picture category_name salary_from salary_to"
     );
@@ -56,9 +59,17 @@ export const get_messages = async (req, res) => {
 
   const messages = await Message.find({ chat_id });
 
-  messages.forEach(async (message) => {
+  (async()=>{
+    await Chat.findByIdAndUpdate(chat_id, {
+      [req.user.is_employer ? "unreat_count_w" : "unreat_count_e"]: 0,
+    })
+  })();
+
+  messages.forEach((message) => {
     if (message.unread && message.user_id !== req.user._id) {
-      Message.findByIdAndUpdate(message._id, { unread: false });
+      (async()=>{
+        await Message.findByIdAndUpdate(message._id, { unread: false })
+      })();
     }
   });
 
@@ -68,7 +79,10 @@ export const get_messages = async (req, res) => {
 export const get_my_chats = async (req, res) => {
   const chats = await Chat.find({
     [req.user.is_employer ? "employer_id" : "waiter_id"]: req.user._id,
-  });
+  }).populate(
+    req.user.is_employer ? "resume_id" : "vacancy_id",
+    `${req.user.is_employer?'name':'category_name'} picture`
+  ).populate("last_message");
 
   res.send(chats);
 };
@@ -84,7 +98,13 @@ export const create_message = async (req, res) => {
   });
   message.save();
 
-  console.log(online_users);
+  (async()=>{
+    await Chat.findByIdAndUpdate(body.chat_id, {
+      last_message: message._id,
+      $inc: { [req.user.is_employer ? "unread_count_w" : "unread_count_e"]: 1 },
+    });
+  })();
+
 
   if (to_whom && online_users.includes(to_whom)) {
     io.to(to_whom).emit("message:created", message);
