@@ -21,7 +21,7 @@ export const get_my_resume = async (req, res) => {
 
 export const get_resume_by_id = async (req, res) => {
   try {
-    let resume = await Resume.findById(req.params.id);
+    let resume = await Resume.findById(req.params.id).populate('owner_id', 'phone')
 
     if (!resume) return res.status(404).send("Resume not found");
 

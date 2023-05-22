@@ -8,6 +8,7 @@ respond_router.post('/create-message',auth_middleware ,controllers.chat.create_m
 respond_router.get('/get-messages',auth_middleware ,controllers.chat.get_messages )
 respond_router.get('/get-chat',auth_middleware ,controllers.chat.get_chat )
 respond_router.get('/get-my-chats',auth_middleware ,controllers.chat.get_my_chats )
+respond_router.get('/user-is-online',auth_middleware ,controllers.chat.get_user_status )
 
 
 

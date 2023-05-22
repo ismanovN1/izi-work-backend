@@ -60,8 +60,8 @@ export const get_messages = async (req, res) => {
   const messages = await Message.find({ chat_id });
 
   (async()=>{
-    await Chat.findByIdAndUpdate(chat_id, {
-      [req.user.is_employer ? "unreat_count_w" : "unreat_count_e"]: 0,
+   await Chat.findByIdAndUpdate(chat_id, {
+      [req.user.is_employer ? "unread_count_e" : "unread_count_w"]: 0,
     })
   })();
 
@@ -72,6 +72,12 @@ export const get_messages = async (req, res) => {
       })();
     }
   });
+
+  const last_message_user = messages[messages.length-1]
+
+  if(last_message_user?.unread && last_message_user !== req.user._id) {
+
+    io.to(last_message_user?.user_id.toString()).emit("message:readed", chat_id );}
 
   res.send(messages);
 };
@@ -85,6 +91,11 @@ export const get_my_chats = async (req, res) => {
   ).populate("last_message");
 
   res.send(chats);
+};
+
+export const get_user_status = async (req, res) => {
+
+  res.send(online_users.has(req.query.user_id));
 };
 
 export const create_message = async (req, res) => {
@@ -106,7 +117,7 @@ export const create_message = async (req, res) => {
   })();
 
 
-  if (to_whom && online_users.includes(to_whom)) {
+  if (to_whom && online_users.has(to_whom)) {
     io.to(to_whom).emit("message:created", message);
   } else if (to_whom) {
     const user = await User.findById(to_whom);
