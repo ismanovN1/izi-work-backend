@@ -54,7 +54,8 @@ export const authorization = async (req, res) => {
     req.body.password,
     user.password
   );
-  if (!isValidPassword)
+  
+  if (!isValidPassword || (Boolean(user.is_employe) !== Boolean(req.body.is_employer)))
     return res.status(400).send("Email or password is incorrect");
 
   const token = user.generateAuthToken();

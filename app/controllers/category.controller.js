@@ -22,18 +22,27 @@ export const create_category = async (req, res) => {
     const { error } = validateCategory(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    const { image } = req.files||{};
+    const { image, default_image } = req.files||{};
 
     if (!image?.mimetype?.includes("image")) return res.status(400).send('Incorrect icon');
+    if (!default_image.mimetype?.includes("image")) return res.status(400).send('Incorrect default');
+
+
 
     let file_path = "/icons/" + uuidv4() + image.name;
-      image.mv(__dirname + "/public" + file_path);
+    image.mv(__dirname + "/public" + file_path);
+
+
 
     const category = new Category({
       ..._.pick(req.body, ["name", "children"]),
       icon: file_path? config.get("host_name") + file_path:'',
     });
 
+    let def_image_path = "/default_images/" + category._id.toString();
+    default_image.mv(__dirname + "/public" + def_image_path);
+
+    category.default_image = def_image_path? config.get("host_name") + def_image_path:''
     await category.save();
 
     res.status(201).send(category);

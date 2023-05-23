@@ -72,6 +72,7 @@ export const get_vacancies = async (req, res) => {
       salary_from: 1,
       salary_to: 1,
       category_name: 1,
+      category_id: 1,
       descriptions: 1,
       created_at: 1,
       ...checkObjValue({ location: by_distance ? 1 : undefined }),
@@ -95,7 +96,7 @@ export const get_my_vacancy_by_id = async (req, res) => {
 };
 
 export const get_vacancy_by_id = async (req, res) => {
-  let vacancy = await Vacancy.findById(req.params.id).populate('company_id');
+  let vacancy = await Vacancy.findById(req.params.id).populate('company_id').populate('owner_id')
 
   if (!vacancy) return res.status(404).send("Vacancy not found");
 

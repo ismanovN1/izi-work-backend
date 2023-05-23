@@ -23,6 +23,7 @@ export const validateUserAuth = (user) => {
   const schema = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required(),
+    is_employer: Joi.boolean(),
   });
 
   return schema.validate(user);
