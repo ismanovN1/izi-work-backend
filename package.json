@@ -7,7 +7,7 @@
   "scripts": {
     "serve": "node index.js",
     "dev": "export PORT=8001  && export jwt_private_key=123 && nodemon index.js",
-    "start": "node index.js"
+    "start": "export PORT=3003  && export jwt_private_key=8 && NODE_ENV=production && nodemon index.js"
   },
   "engines": {
     "node": "18.16.0"

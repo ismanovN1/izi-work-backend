@@ -15,7 +15,7 @@ export const get_chat = async (req, res) => {
      `name picture`
    ).populate(
       "vacancy_id",
-      "_id picture category_name salary_from salary_to"
+      "_id picture category_name salary_from salary_to status"
     );
     if (!chat) return res.status(404).send("Chat not found");
     return res.send(chat);
@@ -30,7 +30,7 @@ export const get_chat = async (req, res) => {
 
   let chat = await Chat.findOne(query).populate(
     "vacancy_id",
-    "_id picture category_name salary_from salary_to"
+    "_id picture category_name salary_from salary_to status"
   );
 
   if (chat) return res.send(chat);
@@ -49,8 +49,9 @@ export const get_chat = async (req, res) => {
     category_name: 1,
     salary_from: 1,
     salary_to: 1,
+    status: 1
   });
-  res.send({ ..._.pick(chat, ["vacancy_id"]), vacancy_id: vacancy });
+  res.send({ ..._.omit(chat, ["vacancy_id"]), vacancy_id: vacancy });
 };
 
 export const get_messages = async (req, res) => {
@@ -87,7 +88,7 @@ export const get_my_chats = async (req, res) => {
     [req.user.is_employer ? "employer_id" : "waiter_id"]: req.user._id,
   }).populate(
     req.user.is_employer ? "resume_id" : "vacancy_id",
-    `${req.user.is_employer?'name':'category_name'} picture`
+    `${req.user.is_employer?'name':'category_name salary_from salary_to'} picture`
   ).populate("last_message");
 
   res.send(chats);
@@ -127,7 +128,7 @@ export const create_message = async (req, res) => {
         to: user.email,
         subject: "У вас новое сообщение",
         text: `${body.message}
-         https://iziwork.kz/`,
+         https://${req.user?.is_employer?'employer.':''}iziwork.kz/`,
       };
       transporter.sendMail(mailOptions, (err, info) => {
         console.log(err);
