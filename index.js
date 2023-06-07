@@ -5,6 +5,7 @@ import helmet from "helmet";
 import router from "./app/routes/index.js";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import fs from "fs";
 import nodemailer from "nodemailer";
 import { Server } from "socket.io";
 import { createServer } from "http";
@@ -36,7 +37,10 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-const server = createServer(app);
+const server = createServer({
+  key: fs.readFileSync('/etc/letsencrypt/live/api.iziwork.kz/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/api.iziwork.kz/cert.pem'),
+},app);
 
 export const io = new Server(server, {
   cors: {
