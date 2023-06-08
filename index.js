@@ -8,7 +8,7 @@ import cors from "cors";
 import fs from "fs";
 import nodemailer from "nodemailer";
 import { Server } from "socket.io";
-import { createServer } from "http";
+import { createServer } from "https";
 import { onConnection } from "./app/socket/index.js";
 
 const PORT = process.env.PORT || 5000;

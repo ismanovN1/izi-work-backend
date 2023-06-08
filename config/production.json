@@ -1,4 +1,4 @@
 {
     "db_url": "mongodb+srv://ismanov98q:mZgV1b37cfC2tDzK@izi-cluster.nmst9k5.mongodb.net/?retryWrites=true",
-    "host_name": "http://185.146.3.221:3003/"
+    "host_name": "https://api.iziwork.kz:3003/"
 }
