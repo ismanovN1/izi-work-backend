@@ -9,6 +9,7 @@ import fs from "fs";
 import nodemailer from "nodemailer";
 import { Server } from "socket.io";
 import { createServer } from "https";
+import { createServer as createDevServer } from "http";
 import { onConnection } from "./app/socket/index.js";
 
 const PORT = process.env.PORT || 5000;
@@ -37,10 +38,13 @@ export const transporter = nodemailer.createTransport({
   },
 });
 
-const server = createServer({
-  key: fs.readFileSync('/etc/letsencrypt/live/api.iziwork.kz/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/api.iziwork.kz/cert.pem'),
-},app);
+
+// const server =  createServer({
+//   key: fs.readFileSync('/etc/letsencrypt/live/api.iziwork.kz/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/api.iziwork.kz/cert.pem'),
+// },app);
+
+const server =  createDevServer(app);
 
 export const io = new Server(server, {
   cors: {
